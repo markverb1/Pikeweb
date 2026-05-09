@@ -1,0 +1,3 @@
+[submodule "public/flat-remix"]
+	path = public/flat-remix
+	url = https://github.com/daniruiz/flat-remix.git
