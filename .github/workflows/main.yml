@@ -11,8 +11,8 @@ jobs:
     prettier:
         runs-on: ubuntu-latest
         steps:
-            - name: Setup
-              uses: actions/setup-node@v6
+            # - name: Setup
+            #   uses: actions/setup-node@v6
             - name: Checkout
               uses: actions/checkout@v4
             - name: Prettify code
@@ -20,3 +20,4 @@ jobs:
               with:
                   # This part is also where you can pass other options, for example:
                   prettier_options: --write
+                  prettier_plugins: "prettier-plugin-svelte"
