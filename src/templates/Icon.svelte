@@ -53,7 +53,7 @@
   style="transform: translate({x}px, {y}px);"
   onpointerdown={onMouseDown}
   {ondblclick}>
-  <img src={icon} alt={name} {width} {height} draggable="false" />
+  <img src={import.meta.env.BASE_URL + icon.replace(/^\/+/, '')} alt={name} {width} {height} draggable="false" />
   <p
     class="text-neutral-50 drop-shadow-[0_0_1.2px_rgba(0,0,0,1),0_0_1.2px_rgba(0,0,0,1)]">
     {name}
