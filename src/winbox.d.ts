@@ -96,7 +96,11 @@ declare module "winbox/src/js/winbox.js" {
     close(force?: boolean): boolean | undefined;
 
     move(x?: string | number, y?: string | number, skipUpdate?: boolean): this;
-    resize(w?: string | number, h?: string | number, skipUpdate?: boolean): this;
+    resize(
+      w?: string | number,
+      h?: string | number,
+      skipUpdate?: boolean,
+    ): this;
 
     addControl(control: WinBoxControlType): this;
     removeControl(control: WinBoxControlType): this;

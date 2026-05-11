@@ -15,6 +15,14 @@
   });
 </script>
 
-<Icon icon="/Flat-Remix-Blue-Dark/apps/scalable/gnome-terminal.svg" name="Terminal" width="64" height="64"/>
+<div></div>
+<Icon
+  icon="/icons/terminal.svg"
+  name="Terminal"
+  width="64"
+  height="64"
+  ondblclick={(e) => {
+    alert("Double click");
+  }} />
 
 <!-- <div class="flex h-full"><CTerminal class="grow flex-1" /></div> -->

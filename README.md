@@ -2,10 +2,14 @@
 
 A hacking game on the web using Svelte + TypeScript + Vite.
 
-## Cloning the repository
+## Running
 
-`git clone --recurse-submodules https://github.com/markverb1/Pikeweb.git`
+Recommended IDE setup: [VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) + [Tailwind](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss).  
+Setup:
 
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+```sh
+git clone https://github.com/markverb1/Pikeweb.git
+cd Pikeweb
+npm install
+npm run dev # Run with Vite
+```
