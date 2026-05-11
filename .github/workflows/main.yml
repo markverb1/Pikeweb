@@ -1,6 +1,8 @@
 name: Continuous Integration
 
-# This action works with pull requests and pushes
+permissions:
+    contents: write
+
 on:
     pull_request:
     push:
@@ -10,15 +12,15 @@ on:
 jobs:
     prettier:
         runs-on: ubuntu-latest
+
         steps:
-            - name: Setup
-              uses: actions/setup-node@v6
             - name: Checkout
               uses: actions/checkout@v4
+
             - name: Prettify code
               uses: creyD/prettier_action@v4.6
               with:
-                  # This part is also where you can pass other options, for example:
-                  prettier_options: --write
-                  prettier_plugins: "prettier-plugin-svelte"
+                  working_directory: ${{ github.workspace }}
+                  prettier_options: --write .
+                  prettier_plugins: prettier-plugin-svelte
                   allow_other_plugins: true
