@@ -1,6 +1,6 @@
 # Pikeweb
 
-A hacking game on the web using Svelte + TypeScript + Vite.
+A hacking game on the web using Svelte, Tailwind CSS, TypeScript and Vite.
 
 ## Running
 
