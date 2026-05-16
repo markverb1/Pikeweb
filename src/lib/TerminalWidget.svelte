@@ -4,8 +4,8 @@
 
 <span
   style="width:{width}ch;left:{offset}ch"
-  class="h-lh font-mono overflow-hidden text-[1em] {overlay
+  class="h-lh overflow-hidden font-mono text-[1em] {overlay
     ? 'absolute'
-    : 'inline-block align-bottom relative'}">
+    : 'relative inline-block align-bottom'}">
   {@render children?.()}
 </span>

@@ -37,7 +37,7 @@
   <div
     bind:this={widget}
     id="widget"
-    class="w-1 h-full align-middle box-border border-l-2 border-l-term-foreground-intense">
+    class="border-l-term-foreground-intense box-border h-full w-1 border-l-2 align-middle">
   </div>
 </TerminalWidget>
 

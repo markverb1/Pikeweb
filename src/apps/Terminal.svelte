@@ -38,7 +38,7 @@
 </script>
 
 <div
-  class="h-full w-full font-mono bg-term-background {focused
+  class="bg-term-background h-full w-full font-mono {focused
     ? 'text-term-foreground'
     : 'text-term-foreground-faded'}">
   <span>

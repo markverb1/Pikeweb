@@ -22,7 +22,7 @@ jobs:
               with:
                   working_directory: ${{ github.workspace }}
                   prettier_options: --write .
-                  prettier_plugins: prettier-plugin-svelte
+                  prettier_plugins: "prettier-plugin-svelte prettier-plugin-tailwindcss"
                   allow_other_plugins: true
                   commit_message: Format code
                   same_commit: false # this will fuck up git if you enable it :>

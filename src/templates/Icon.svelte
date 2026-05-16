@@ -49,7 +49,7 @@
 </script>
 
 <button
-  class="flex flex-col items-center p-1.5 rounded-md hover:bg-gray-100/30 focus:bg-gray-100/50"
+  class="flex flex-col items-center rounded-md p-1.5 hover:bg-gray-100/30 focus:bg-gray-100/50"
   style="transform: translate({x}px, {y}px);"
   onpointerdown={onMouseDown}
   {ondblclick}>
