@@ -13,6 +13,9 @@
     help: (args: string[]) => {
       return 'wrtie &lt;script&gt; alert("Inject sql SELECT USERS PASSWORD or something idk im not a hacker")&lt;/script&gt;';
     },
+    lolcat: (args: string[]) => {
+      return `<span style="background: linear-gradient(to right, #ff0000, #ff7700, #ffff00, #00ff00, #0000ff, #8b00ff, #ff0000); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${args.slice(1).join(" ")}</span>`;
+    },
   };
 
   function isScrolledToBottom(el: HTMLElement): boolean {

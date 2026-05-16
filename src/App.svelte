@@ -1,6 +1,6 @@
 <script>
   import { onMount, mount } from "svelte";
-  import CTerminal from "./apps/BasicTerminal.svelte";
+  import Terminal from "./apps/Terminal.svelte";
   import Icon from "./templates/Icon.svelte";
   import WinBox from "winbox/src/js/winbox.js";
   onMount(() => {
@@ -16,7 +16,7 @@
     container.style = "height:100%;width:100%;";
 
     // Mount Svelte component into it
-    const instance = mount(CTerminal, {
+    const instance = mount(Terminal, {
       target: container,
       props: {},
     });
