@@ -32,7 +32,11 @@
       },
       onblur() {
         instance.onWinBlur();
+<<<<<<< HEAD
       }
+=======
+      },
+>>>>>>> 7e7efdc644794d7009d81433de9d25d4e5191e27
     });
   }
 </script>
