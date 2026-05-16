@@ -6,12 +6,27 @@
   import "@xterm/xterm/css/xterm.css";
 
   import type { ClassValue } from "svelte/elements";
-  const props: { class: ClassValue } = $props();
+  const props: { class?: ClassValue } = $props();
 
   let terminalEl: HTMLDivElement;
   let term: Terminal;
   let webgl: WebglAddon;
   let observer: ResizeObserver;
+
+  function setupInput() {
+    term.onKey(({ key, domEvent }) => {
+      const domKey = domEvent.key;
+      if (domKey.length === 1) {
+        term.write(key);
+        return;
+      }
+      switch (domKey) {
+        case "Backspace":
+          term.write("\b \b");
+          break;
+      }
+    });
+  }
 
   onMount(async () => {
     await document.fonts.ready;
@@ -37,8 +52,11 @@
     observer.observe(terminalEl);
 
     fitAddon.fit();
-    term.writeln("Test test blah blah ===> @@@ AAAA %%^ &&&");
+    term.writeln("shell™ for ctOS Scale 7.6.1");
+    term.writeln("Copyright (C) Bitwise Laboratories. All rights reserved.");
+
+    setupInput();
   });
 </script>
 
-<div bind:this={terminalEl} class={["terminal", props.class]}></div>
+<div bind:this={terminalEl} class={["h-full bg-[#282828]", props.class]}></div>
