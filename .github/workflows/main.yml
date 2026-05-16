@@ -1,0 +1,27 @@
+name: Continuous Integration
+
+permissions:
+    contents: write
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+
+jobs:
+    prettier:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Prettify code
+              uses: creyD/prettier_action@v4.6
+              with:
+                  working_directory: ${{ github.workspace }}
+                  prettier_options: --write .
+                  prettier_plugins: prettier-plugin-svelte
+                  allow_other_plugins: true
+                  same_commit: true
