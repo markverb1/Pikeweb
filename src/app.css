@@ -14,50 +14,50 @@
 
 @theme {
   --font-sans:
-  "Cantarell", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    "Cantarell", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-mono:
-  "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-  "Liberation Mono", "Courier New", monospace;
-  
+    "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
   /* THIS CODE HAS BEEN TERMINATED! - Claude */
-  --color-term-background:         rgb(35, 37, 46);
+  --color-term-background: rgb(35, 37, 46);
   --color-term-background-intense: rgb(35, 37, 46);
-  --color-term-foreground:         rgb(255, 255, 255);
+  --color-term-foreground: rgb(255, 255, 255);
   --color-term-foreground-intense: rgb(255, 255, 255);
-  --color-term-foreground-faded:   rgb(179, 179, 179);
-  
-  --color-term-black:              rgb(31, 34, 41);
-  --color-term-black-intense:      rgb(25, 131, 136);
-  --color-term-black-faded:        rgb(22, 24, 29);
-  
-  --color-term-red-faded:          rgb(148, 18, 18);
-  --color-term-red:                rgb(212, 25, 25);
-  --color-term-red-intense:        rgb(236, 1, 1);
-  
-  --color-term-green:              rgb(94, 189, 171);
-  --color-term-green-intense:      rgb(71, 212, 185);
-  --color-term-green-faded:        rgb(66, 132, 120);
-  
-  --color-term-yellow:             rgb(254, 164, 76);
-  --color-term-yellow-intense:     rgb(255, 138, 24);
-  --color-term-yellow-faded:       rgb(178, 115, 53);
-  
-  --color-term-blue:               rgb(54, 123, 240);
-  --color-term-blue-intense:       rgb(39, 127, 255);
-  --color-term-blue-faded:         rgb(38, 86, 168);
-  
-  --color-term-purple:             rgb(151, 85, 179);
-  --color-term-purple-intense:     rgb(150, 42, 195);
-  --color-term-purple-faded:       rgb(106, 60, 125);
-  
-  --color-term-cyan:               rgb(73, 174, 230);
-  --color-term-cyan-intense:       rgb(5, 161, 247);
-  --color-term-cyan-faded:         rgb(51, 122, 161);
-  
-  --color-term-white:              rgb(230, 230, 230);
-  --color-term-white-intense:      rgb(255, 255, 255);
-  --color-term-white-faded:        rgb(161, 161, 161);
+  --color-term-foreground-faded: rgb(179, 179, 179);
+
+  --color-term-black: rgb(31, 34, 41);
+  --color-term-black-intense: rgb(25, 131, 136);
+  --color-term-black-faded: rgb(22, 24, 29);
+
+  --color-term-red-faded: rgb(148, 18, 18);
+  --color-term-red: rgb(212, 25, 25);
+  --color-term-red-intense: rgb(236, 1, 1);
+
+  --color-term-green: rgb(94, 189, 171);
+  --color-term-green-intense: rgb(71, 212, 185);
+  --color-term-green-faded: rgb(66, 132, 120);
+
+  --color-term-yellow: rgb(254, 164, 76);
+  --color-term-yellow-intense: rgb(255, 138, 24);
+  --color-term-yellow-faded: rgb(178, 115, 53);
+
+  --color-term-blue: rgb(54, 123, 240);
+  --color-term-blue-intense: rgb(39, 127, 255);
+  --color-term-blue-faded: rgb(38, 86, 168);
+
+  --color-term-purple: rgb(151, 85, 179);
+  --color-term-purple-intense: rgb(150, 42, 195);
+  --color-term-purple-faded: rgb(106, 60, 125);
+
+  --color-term-cyan: rgb(73, 174, 230);
+  --color-term-cyan-intense: rgb(5, 161, 247);
+  --color-term-cyan-faded: rgb(51, 122, 161);
+
+  --color-term-white: rgb(230, 230, 230);
+  --color-term-white-intense: rgb(255, 255, 255);
+  --color-term-white-faded: rgb(161, 161, 161);
 }
 
 /* Winbox */
