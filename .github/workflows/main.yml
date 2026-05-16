@@ -24,4 +24,5 @@ jobs:
                   prettier_options: --write .
                   prettier_plugins: prettier-plugin-svelte
                   allow_other_plugins: true
-                  same_commit: false
+                  commit_message: Format code
+                  same_commit: false # this will fuck up git if you enable it :>
