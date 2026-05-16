@@ -1,6 +1,6 @@
 <script>
   import { onMount, mount } from "svelte";
-  import CTerminal from "./apps/Terminal.svelte";
+  import CTerminal from "./apps/BasicTerminal.svelte";
   import Icon from "./templates/Icon.svelte";
   import WinBox from "winbox/src/js/winbox.js";
   onMount(() => {
@@ -27,12 +27,12 @@
       width: 9 * 80, // 80 cols (one letter can occupy 9px at most)
       height: 300,
       icon: `${import.meta.env.BASE_URL}/icons/terminal.svg`,
-      onfocus() {
-        instance.onWinFocus();
-      },
-      onblur() {
-        instance.onWinBlur();
-      },
+      // onfocus() {
+      //   instance.onWinFocus();
+      // },
+      // onblur() {
+      //   instance.onWinBlur();
+      // },
     });
   }
 </script>

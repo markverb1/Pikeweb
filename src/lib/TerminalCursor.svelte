@@ -6,17 +6,15 @@
   let widgetAnim: Animation;
   let { offset = 0 } = $props();
 
-  onMount(() => {
+  $effect(() => {
+    if (!widget) return;
     widgetAnim = widget.animate(
       [
-        { opacity: 1, offset: 0, easing: "step-end" }, // 0%
-        { opacity: 0, offset: 0.5, easing: "step-end" }, // 50%
-        { opacity: 1, offset: 1 }, // 100%
+        { opacity: 1, offset: 0, easing: "step-end" },
+        { opacity: 0, offset: 0.5, easing: "step-end" },
+        { opacity: 1, offset: 1 },
       ],
-      {
-        duration: 1000,
-        iterations: Infinity,
-      },
+      { duration: 1000, iterations: Infinity },
     );
   });
 
@@ -33,25 +31,9 @@
   }
 </script>
 
-<TerminalWidget width="1" {offset} overlay={true}>
+<TerminalWidget width="1" {offset} overlay={false}>
   <div
     bind:this={widget}
-    id="widget"
-    class="border-l-term-foreground-intense box-border h-full w-1 border-l-2 align-middle">
+    class="border-l-term-foreground-intense absolute top-0 left-0 box-border h-full w-1 border-l-2">
   </div>
 </TerminalWidget>
-
-<!-- <style>
-  #widget {
-    animation: 1s blink step-end infinite;
-  }
-  @keyframes blink {
-    from,
-    to {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-</style> -->
