@@ -47,7 +47,7 @@
 <div class="flex h-full w-full flex-col bg-[#474747] p-1 text-green-400">
   <pre
     bind:this={pre}
-    class=" min-h-0 grow overflow-y-auto">{@html output}</pre>
+    class="min-h-0 grow overflow-y-auto text-wrap">{@html output}</pre>
   <label
     class="flex h-(--size) w-full shrink-0 items-center gap-2 border-t-2 border-t-black font-mono">
     <span class="text-base-content/50 select-none">{prompt}</span>
