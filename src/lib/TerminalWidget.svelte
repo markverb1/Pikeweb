@@ -3,9 +3,9 @@
 </script>
 
 <span
-  style={overlay ? `width:${width}ch;left:${offset}ch` : ''}
+  style={overlay ? `width:${width}ch;left:${offset}ch` : ""}
   class="h-lh font-mono text-[1em] {overlay
     ? 'absolute overflow-hidden'
-    : 'relative inline-block align-bottom w-0'}">
+    : 'relative inline-block w-0 align-bottom'}">
   {@render children?.()}
 </span>
