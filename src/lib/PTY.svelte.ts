@@ -25,7 +25,7 @@ export class PTYBase {
     proc.onStderr((data) => this.onStderr(data));
     proc.onExit((code) => {
       this.outputting = this.outputting.filter((p) => p !== proc);
-      this.onExit(proc,code);
+      this.onExit(proc, code);
     });
   }
 

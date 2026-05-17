@@ -9,6 +9,6 @@ export class ConsolePTY extends PTYBase {
     console.error(data);
   }
   onExit(proc: Process, code: number): void {
-    console.log(`[process ${proc.pid} exited with code ${code}]`)
+    console.log(`[process ${proc.pid} exited with code ${code}]`);
   }
 }
