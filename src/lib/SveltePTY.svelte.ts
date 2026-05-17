@@ -6,6 +6,6 @@ export class SveltePTY extends PTYBase {
     this.output += data;
   }
   onStderr(data: string): void {
-    this.output += `<span class="text-term-red-intense">${data}</span>`;
+    this.output += `<span class="text-term-red-intense font-bold bg-term-black">${data}</span>`;
   }
 }
