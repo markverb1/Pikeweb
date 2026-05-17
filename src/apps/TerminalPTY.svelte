@@ -3,7 +3,6 @@
   import { SveltePTY } from "../lib/SveltePTY.svelte";
   import { startProcess } from "../lib/Programs.svelte";
 
-
   let prompt = $state("Sh>");
   let pty = new SveltePTY();
   let pre: HTMLPreElement;
