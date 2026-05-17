@@ -1,13 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { SveltePTY } from "../lib/SveltePTY.svelte";
-  import type { Process } from "../lib/Process.svelte";
-  import type { PTYBase } from "../lib/PTY.svelte";
+  import { startProcess } from "../lib/Programs.svelte";
 
-  let { startProcess } = $props<{
-    startProcess: (args: string[], pty?: PTYBase) => Process | undefined;
-  }>();
-  // let output = $state("shell for ctOS");
+
   let prompt = $state("Sh>");
   let pty = new SveltePTY();
   let pre: HTMLPreElement;
