@@ -28,16 +28,26 @@ export const programs: Record<
   },
   ctsh: (args: string[], proc: Process, pty?: PTYBase) => {
     let prompt = $state("Sh>");
+    // prettier-ignore
     proc.stdout(
-      '<span style="font-variant: all-small-caps;" class="font-medium">CT</span>SHELL v1.0.2\n',
+      
+` ___(  / _ // ctShell 
+( /__)/)(-((  v1.0.3`,
     );
-    proc.onStdin((data) => {
+    proc.onStdin(async (data) => {
+      console.log("recieve stdin")
       proc.stdout(
         `\n<span class="text-base-content/50">${prompt}${data}</span>\n`,
       );
       if (pty != null) {
-        if (startProcess(data.split(" "), pty) == undefined)
-          proc.stderr("Unknown command");
+        console.log("backgrounded ctsh");
+        let nuproc = startProcess(data.split(" "), pty, proc);
+        if (nuproc == undefined) proc.stderr("Unknown command");
+        // nuproc?.onExit((code) => {
+        //   console.log("test");
+        //   pty.foreground(proc);
+        //   console.log("foregrounded ctsh");
+        // });
       }
     });
   },
@@ -46,12 +56,17 @@ export const programs: Record<
 export function startProcess(
   args: string[],
   pty?: PTYBase,
+  parent?: Process,
 ): Process | undefined {
   if (args.length < 1) return;
   let prg = programs[args[0]];
   if (prg == null) return;
-  const proc = new Process();
+  const proc = new Process(parent);
   if (pty != null) pty.foreground(proc);
+  // if (returnProc != null)
+  //   proc.onExit(() => {
+  //     pty?.foreground(returnProc);
+  //   });
   prg(args, proc, pty);
   return proc;
 }

@@ -1,47 +1,120 @@
 import { Process } from "./Process.svelte";
 
+export interface PTYInfo {
+  richtext: boolean;
+  editableOutput: boolean;
+  stdout: boolean;
+  stdin: boolean;
+  stderr: boolean;
+}
+
 export class PTYBase {
-  // Attached process
   process: Process | null = null;
-  // Processes which redirect their stdout to this terminal
+  ptyinfo: PTYInfo = {
+    richtext: true,
+    editableOutput: true,
+    stdout: true,
+    stdin: true,
+    stderr: true,
+  };
+
   outputting: Process[] = [];
-  supportsStdin: boolean = false;
+  foregrounded: Process | null = null;
+
+  // Store unsubscribe functions per process
+  private _unsubs = new Map<
+    Process,
+    {
+      stdout: (() => void) | null;
+      stderr: (() => void) | null;
+      exit: (() => void) | null;
+    }
+  >();
 
   onStdout(data: string) {}
   onStderr(data: string) {}
   onExit(proc: Process, code: number) {}
 
   writeStdin(data: string) {
-    // only blocking foregrounded processes get stdin
-    this.outputting
-      .filter((p) => p.blocking)
-      .forEach((p) => p.receiveStdin(data));
+    this.foregrounded?.receiveStdin(data);
   }
 
-  foreground(proc?: Process) {
+  get isLocked(): boolean {
+    return this.foregrounded !== null;
+  }
+
+  foreground(proc?: Process, unsubstdout: boolean = true, unsubstderr: boolean = true) {
     if (proc == null) return;
-    this.outputting.push(proc);
-    proc.onStdout((data) => this.onStdout(data));
-    proc.onStderr((data) => this.onStderr(data));
-    proc.onExit((code) => {
-      this.outputting = this.outputting.filter((p) => p !== proc);
+    this.background(unsubstdout,unsubstderr)
+    this.foregrounded = proc;
+    if (!this.outputting.includes(proc)) this.outputting.push(proc);
+    
+
+    const unsubStdout = proc.onStdout((data) => this.onStdout(data));
+    const unsubStderr = proc.onStderr((data) => this.onStderr(data));
+    const unsubExit = proc.onExit((code) => {
+      this._cleanup(proc);
       this.onExit(proc, code);
     });
+
+    this._unsubs.set(proc, {
+      stdout: unsubStdout,
+      stderr: unsubStderr,
+      exit: unsubExit,
+    });
+  }
+
+  background(unsubStdout: boolean = false, unsubStderr: boolean = false) {
+    const proc = this.foregrounded;
+    if (proc == null) return;
+
+    this.foregrounded = null;
+    const unsubs = this._unsubs.get(proc);
+    if (!unsubs) return;
+
+    if (unsubStdout) {
+      unsubs.stdout?.();
+      unsubs.stdout = null;
+    }
+    if (unsubStderr) {
+      unsubs.stderr?.();
+      unsubs.stderr = null;
+    }
+    if (proc.parent != null) this.foreground(proc.parent);
+  }
+
+  private _cleanup(proc: Process) {
+    const unsubs = this._unsubs.get(proc);
+    unsubs?.stdout?.();
+    unsubs?.stderr?.();
+    unsubs?.exit?.();
+    this._unsubs.delete(proc);
+    this.outputting = this.outputting.filter((p) => p !== proc);
+    if (this.foregrounded === proc) this.foregrounded = null;
+    if (proc.parent != null) this.foreground(proc.parent,true,true);
   }
 
   subscribeToStdout(proc?: Process) {
     if (proc == null) return;
-    proc.onStdout((data) => this.onStdout(data));
+    const unsub = proc.onStdout((data) => this.onStdout(data));
+    const existing = this._unsubs.get(proc) ?? {
+      stdout: null,
+      stderr: null,
+      exit: null,
+    };
+    this._unsubs.set(proc, { ...existing, stdout: unsub });
     this.outputting.push(proc);
   }
 
   subscribeToStderr(proc?: Process) {
     if (proc == null) return;
-    proc.onStderr((data) => this.onStdout(data));
+    const unsub = proc.onStderr((data) => this.onStdout(data));
+    const existing = this._unsubs.get(proc) ?? {
+      stdout: null,
+      stderr: null,
+      exit: null,
+    };
+    this._unsubs.set(proc, { ...existing, stderr: unsub });
     this.outputting.push(proc);
-  }
-
-  get isLocked(): boolean {
-    return this.outputting.some((proc) => proc.blocking);
   }
 }
