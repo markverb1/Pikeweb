@@ -35,7 +35,7 @@ export const programs: Record<
 ( /__)/)(-((  v1.0.3`,
     );
     proc.onStdin(async (data) => {
-      console.log("recieve stdin")
+      console.log("recieve stdin");
       proc.stdout(
         `\n<span class="text-base-content/50">${prompt}${data}</span>\n`,
       );

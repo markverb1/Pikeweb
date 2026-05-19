@@ -78,6 +78,6 @@ export class Process {
 
   /** @internal */ receiveStdin(data: string) {
     if (!this._killed) this._stdinCbs.forEach((cb) => cb(data));
-    console.log(data)
+    console.log(data);
   }
 }

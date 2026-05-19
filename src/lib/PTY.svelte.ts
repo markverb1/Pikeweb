@@ -43,12 +43,15 @@ export class PTYBase {
     return this.foregrounded !== null;
   }
 
-  foreground(proc?: Process, unsubstdout: boolean = true, unsubstderr: boolean = true) {
+  foreground(
+    proc?: Process,
+    unsubstdout: boolean = true,
+    unsubstderr: boolean = true,
+  ) {
     if (proc == null) return;
-    this.background(unsubstdout,unsubstderr)
+    this.background(unsubstdout, unsubstderr);
     this.foregrounded = proc;
     if (!this.outputting.includes(proc)) this.outputting.push(proc);
-    
 
     const unsubStdout = proc.onStdout((data) => this.onStdout(data));
     const unsubStderr = proc.onStderr((data) => this.onStderr(data));
@@ -91,7 +94,7 @@ export class PTYBase {
     this._unsubs.delete(proc);
     this.outputting = this.outputting.filter((p) => p !== proc);
     if (this.foregrounded === proc) this.foregrounded = null;
-    if (proc.parent != null) this.foreground(proc.parent,true,true);
+    if (proc.parent != null) this.foreground(proc.parent, true, true);
   }
 
   subscribeToStdout(proc?: Process) {
