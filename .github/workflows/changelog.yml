@@ -11,6 +11,11 @@ jobs:
     changelog:
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
             - name: Changelog
               uses: TriPSs/conventional-changelog-action@v5
               with:
