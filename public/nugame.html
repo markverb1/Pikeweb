@@ -1,0 +1,378 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+  }
+
+  #ht {
+    font-family: 'Share Tech Mono', monospace;
+    background: #000;
+    color: #00ff41;
+    min-height: 600px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: 28px 1fr 28px;
+    font-size: 13px;
+    border: 1px solid #0f0;
+    position: relative;
+    overflow: hidden
+  }
+
+  #ht::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 65, 0.02) 2px, rgba(0, 255, 65, 0.02) 4px);
+    pointer-events: none;
+    z-index: 10
+  }
+
+  .titlebar {
+    grid-column: 1/-1;
+    background: #0a0a0a;
+    border-bottom: 1px solid #00ff4180;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 8px;
+    font-size: 11px;
+    color: #00ff4199
+  }
+
+  .titlebar span {
+    color: #00ff41;
+    font-weight: bold
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff5f57;
+    display: inline-block;
+    margin-right: 3px
+  }
+
+  .dot.y {
+    background: #ffbd2e
+  }
+
+  .dot.g {
+    background: #28c840
+  }
+
+  #sidebar {
+    border-right: 1px solid #00ff4133;
+    padding: 8px 0;
+    overflow-y: auto;
+    background: #000
+  }
+
+  .sb-section {
+    padding: 4px 8px;
+    font-size: 10px;
+    color: #00ff4166;
+    letter-spacing: 2px;
+    margin-top: 8px
+  }
+
+  .node {
+    padding: 4px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    transition: background 0.1s
+  }
+
+  .node:hover {
+    background: #00ff4115
+  }
+
+  .node.active {
+    background: #00ff411a;
+    color: #00ff41
+  }
+
+  .node.compromised {
+    color: #ff4141
+  }
+
+  .node.secure {
+    color: #00ff4166
+  }
+
+  .node-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0
+  }
+
+  .nd-red {
+    background: #ff4141
+  }
+
+  .nd-green {
+    background: #00ff41
+  }
+
+  .nd-yellow {
+    background: #ffd700
+  }
+
+  .nd-gray {
+    background: #444
+  }
+
+  #main {
+    display: flex;
+    flex-direction: column;
+    background: #000
+  }
+
+  #topbar {
+    background: #0a0a0a;
+    border-bottom: 1px solid #00ff4133;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: #00ff4166;
+    display: flex;
+    gap: 16px
+  }
+
+  #topbar .lbl {
+    color: #00ff4199
+  }
+
+  #topbar .val {
+    color: #00ff41
+  }
+
+  #output {
+    flex: 1;
+    padding: 10px 12px;
+    overflow-y: auto;
+    line-height: 1.6;
+    font-size: 12px
+  }
+
+  #output .line {
+    padding: 1px 0
+  }
+
+  .c-green {
+    color: #00ff41
+  }
+
+  .c-red {
+    color: #ff4141
+  }
+
+  .c-yellow {
+    color: #ffd700
+  }
+
+  .c-cyan {
+    color: #00ffff
+  }
+
+  .c-gray {
+    color: #555
+  }
+
+  .c-white {
+    color: #eee
+  }
+
+  .c-orange {
+    color: #ff8c00
+  }
+
+  #inputrow {
+    border-top: 1px solid #00ff4133;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #000
+  }
+
+  #prompt-label {
+    color: #00ff41;
+    white-space: nowrap;
+    font-size: 12px
+  }
+
+  #cmd {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #00ff41;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    flex: 1;
+    caret-color: #00ff41
+  }
+
+  #statusbar {
+    grid-column: 1/-1;
+    background: #0a0a0a;
+    border-top: 1px solid #00ff4180;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 16px;
+    font-size: 10px;
+    color: #00ff4166
+  }
+
+  .sb-item .lbl {
+    color: #00ff4144
+  }
+
+  .sb-item .val {
+    color: #00ff4199
+  }
+
+  .blink {
+    animation: blink 1s step-end infinite
+  }
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1
+    }
+
+    50% {
+      opacity: 0
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #000
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #00ff4133
+  }
+
+  .progress-bar {
+    display: inline-block;
+    margin-left: 4px
+  }
+
+  .scanline {
+    color: #00ff41
+  }
+</style>
+<div id="ht">
+  <div class="titlebar">
+    <span class="dot"></span><span class="dot y"></span><span class="dot g"></span>
+    &nbsp;&nbsp;<span>PIKAR OS v5.083</span>&nbsp;&bull;&nbsp;kernel 4.19.0-PIKAR&nbsp;&bull;&nbsp;user:
+    <span>bit_m4ster</span>
+    <span style="margin-left:auto" id="clock"></span>
+  </div>
+  <div id="sidebar">
+    <div class="sb-section">NETWORK MAP</div>
+    <div class="node active" data-host="localhost" onclick="connectNode(this)"><span
+        class="node-dot nd-green"></span>localhost</div>
+    <div class="node" data-host="naix-corp.net" onclick="connectNode(this)"><span
+        class="node-dot nd-yellow"></span>naix-corp.net</div>
+    <div class="node compromised" data-host="sec-node-04" onclick="connectNode(this)"><span
+        class="node-dot nd-red"></span>sec-node-04 <span style="font-size:9px;color:#ff414188">[PWNED]</span></div>
+    <div class="node secure" data-host="gov-proxy-1" onclick="connectNode(this)"><span
+        class="node-dot nd-gray"></span>gov-proxy-1</div>
+    <div class="node secure" data-host="bankvault.io" onclick="connectNode(this)"><span
+        class="node-dot nd-gray"></span>bankvault.io</div>
+    <div class="sb-section">TOOLS</div>
+    <div class="node" onclick="runTool('PortHack')"><span class="node-dot nd-green"></span>PortHack.exe</div>
+    <div class="node" onclick="runTool('SQLBufferOverflow')"><span class="node-dot nd-green"></span>SQLBufOvf.exe</div>
+    <div class="node" onclick="runTool('SSHcrack')"><span class="node-dot nd-yellow"></span>SSHcrack.exe</div>
+    <div class="node secure" onclick="runTool('TraceKill')"><span class="node-dot nd-red"></span>TraceKill.exe</div>
+    <div class="sb-section">FILES</div>
+    <div class="node" onclick="runCmd('ls')"><span class="node-dot nd-green"></span>/home/bit_m4ster</div>
+    <div class="node" onclick="runCmd('cat notes.txt')"><span class="node-dot nd-yellow"></span>notes.txt</div>
+  </div>
+  <div id="main">
+    <div id="topbar">
+      <span class="sb-item"><span class="lbl">HOST: </span><span class="val" id="cur-host">localhost</span></span>
+      <span class="sb-item"><span class="lbl">IP: </span><span class="val" id="cur-ip">192.168.1.1</span></span>
+      <span class="sb-item"><span class="lbl">PORTS: </span><span class="val" id="cur-ports">22,80,443</span></span>
+      <span class="sb-item"><span class="lbl">TRACE: </span><span class="val" id="trace-status">CLEAN</span></span>
+    </div>
+    <div id="output"></div>
+    <div id="inputrow">
+      <span id="prompt-label" id="prompt">bit_m4ster@localhost:~$</span>
+      <input id="cmd" type="text" autocomplete="off" spellcheck="false" placeholder="type 'help' for commands" />
+    </div>
+  </div>
+  <div id="statusbar">
+    <span class="sb-item"><span class="lbl">MEM: </span><span class="val">2.1GB / 8GB</span></span>
+    <span class="sb-item"><span class="lbl">CPU: </span><span class="val" id="cpu-val">12%</span></span>
+    <span class="sb-item"><span class="lbl">NET: </span><span class="val">↑ 1.2MB/s ↓ 0.4MB/s</span></span>
+    <span class="sb-item"><span class="lbl">PROXY CHAIN: </span><span class="val">TOR → VPN-NL → VPN-SE →
+        HOST</span></span>
+    <span style="margin-left:auto" class="sb-item"><span class="lbl">STATUS: </span><span class="val c-green blink">●
+        CONNECTED</span></span>
+  </div>
+</div>
+<script>
+  const out = document.getElementById('output');
+  const inp = document.getElementById('cmd');
+  const pLabel = document.getElementById('prompt-label');
+  let currentHost = 'localhost'; let traceLevel = 0; let cracked = false; let traceInterval = null;
+  const hosts = {
+    'localhost': { ip: '192.168.1.1', ports: '22,80,443', files: ['notes.txt', 'exploit_log.txt', 'passwords.hash', 'vibecoded_game.zip'], admin: true },
+    'naix-corp.net': { ip: '45.33.12.87', ports: '21,22,80,8080', files: ['employee_db.sql', 'payroll.csv', 'firewall.cfg'], admin: false },
+    'sec-node-04': { ip: '10.0.0.4', ports: '22,3306', files: ['shadow', 'passwd', 'creds.txt'], admin: true },
+    'gov-proxy-1': { ip: '172.16.0.1', ports: '443,8443', files: ['classified_001.enc', 'manifest.pdf'], admin: false },
+    'bankvault.io': { ip: '51.158.99.2', ports: '443,22,3307', files: ['accounts.db', 'transactions_2024.log'], admin: false }
+  };
+  const fileContents = {
+    'notes.txt': '# personal notes\n\nneed to crack naix-corp before friday\nuse SQLBufOvf on port 3306\nremember: always kill trace after session\n\nTODO: check bankvault proxy chain',
+    'exploit_log.txt': '[2024-03-14 02:11] Connected to sec-node-04\n[2024-03-14 02:13] PortHack successful on port 22\n[2024-03-14 02:14] Root shell obtained\n[2024-03-14 02:19] Exfiltrated shadow file\n[2024-03-14 02:21] Trace at 67% - disconnected',
+    'passwords.hash': '$6$rounds=5000$uXbIeXjT$... [SHA-512 HASH]\nadmin:$apr1$xyz...$abc123...\nroot:$6$salt$hashval...',
+    'creds.txt': 'admin:P@ssw0rd123\nroot:toor\nbackup_user:Ch@ng3m3!',
+    'vibecoded_game.zip': '[BINARY] game_v0.9_RELEASE.zip (142 MB)\nContents: src/, assets/, README.md, BUILD_NOTES.txt\n--- totally vibecoded btw ---',
+  };
+  const cmds = {
+    help: () => {
+      print('', 'c-cyan'); print('AVAILABLE COMMANDS', 'c-cyan'); print('─'.repeat(40), 'c-gray');
+      [['connect [host]', 'connect to a network node'], ['scan', 'scan current host ports'], ['ls', 'list files'], ['cat [file]', 'read file contents'], ['crack', 'attempt to crack admin access'], ['probe', 'probe security level'], ['trace', 'check trace level'], ['clear', 'clear terminal'], ['disconnect', 'disconnect from host'], ['whoami', 'current user info'], ['ps', 'show running processes'], ['ifconfig', 'network interfaces']].forEach(([c, d]) => { printRaw(`  <span class="c-yellow">${c}</span><span class="c-gray">${' '.repeat(22 - c.length)}${d}</span>`) })
+    },
+    ls: () => { const h = hosts[currentHost]; print(`Directory: /home/bit_m4ster on ${currentHost}`, 'c-gray'); h.files.forEach(f => { const ext = f.split('.').pop(); const col = ext === 'txt' ? 'c-green' : ext === 'sql' || ext === 'csv' ? 'c-yellow' : ext === 'enc' ? 'c-red' : 'c-white'; printRaw(`  <span class="${col}">${f}</span>`) }) },
+    scan: () => { const h = hosts[currentHost]; printAnim([`Scanning ${currentHost} (${h.ip})...`, 'Running nmap -sV -sC...', '', 'PORT     STATE  SERVICE  VERSION'], () => { h.ports.split(',').forEach(p => { const svcs = { 21: 'ftp      vsftpd 3.0.3', 22: 'ssh      OpenSSH 7.9', 80: 'http     Apache 2.4.51', 443: 'https    nginx 1.18', 3306: 'mysql    MySQL 8.0.28', 3307: 'mysql    MySQL 8.0.30', 8080: 'http     Jetty 9.4', 8443: 'https    lighttpd 1.4' }; printRaw(`  <span class="c-yellow">${p.padEnd(8)}</span><span class="c-green">open   </span><span class="c-white">${svcs[p] || 'unknown'}</span>`) }); print('', ''); print(`${h.ports.split(',').length} ports open. Host appears ${h.admin ? '<span class="c-red">VULNERABLE</span>' : '<span class="c-green">hardened</span>'}`) }) },
+    probe: () => { const h = hosts[currentHost]; printAnim([`Probing security on ${currentHost}...`], () => { const lvls = { localhost: 0, 'naix-corp.net': 3, 'sec-node-04': 2, 'gov-proxy-1': 8, 'bankvault.io': 9 }; const l = lvls[currentHost] || 5; print(`Security Level: ${l}/10`, 'c-yellow'); print(`Firewall: ${l > 5 ? '<span class="c-red">ENTERPRISE</span>' : '<span class="c-yellow">BASIC</span>'}`); print(`IDS: ${l > 6 ? '<span class="c-red">ACTIVE - AI-POWERED</span>' : '<span class="c-green">DISABLED</span>'}`); print(`Admin: ${h.admin ? '<span class="c-green">ACCESS POSSIBLE</span>' : '<span class="c-red">LOCKED DOWN</span>'}`) }) },
+    crack: () => { const h = hosts[currentHost]; if (h.admin) { print(`Already have admin on ${currentHost}`, 'c-green'); return } printAnim([`Initiating crack on ${currentHost}...`, 'Loading PortHack modules...', 'Bruteforcing SSH (port 22)...'], () => { let p = 0; const iv = setInterval(() => { p += Math.floor(Math.random() * 7) + 3; out.lastElementChild.innerHTML = `  <span class="progress-bar c-yellow">[${('█').repeat(Math.floor(p / 5)).padEnd(20, '░')}] ${Math.min(p, 100)}%</span>`; if (p >= 100) { clearInterval(iv); hosts[currentHost].admin = true; print('', ''); print('ROOT ACCESS GRANTED', 'c-green'); print(`Connected to ${currentHost} as root`, 'c-green'); document.querySelector(`[data-host="${currentHost}"]`).classList.add('compromised'); document.querySelector(`[data-host="${currentHost}"]`).innerHTML = `<span class="node-dot nd-red"></span>${currentHost} <span style="font-size:9px;color:#ff414188">[PWNED]</span>`; startTrace() } }, 120); printRaw('  <span class="progress-bar c-yellow">[░░░░░░░░░░░░░░░░░░░░] 0%</span>') }) },
+    trace: () => { print(`Trace level: ${traceLevel}%`, traceLevel > 70 ? 'c-red' : traceLevel > 40 ? 'c-yellow' : 'c-green'); if (traceLevel > 70) print('WARNING: Authorities may be monitoring this connection', 'c-red') },
+    whoami: () => { print('bit_m4ster', 'c-green'); print('uid=1000(bit_m4ster) gid=1000 groups=1000,sudo,netdev', 'c-gray') },
+    clear: () => { out.innerHTML = ''; printBanner() },
+    disconnect: () => { if (currentHost === 'localhost') { print('Already on localhost', 'c-yellow'); return } clearInterval(traceInterval); print(`Disconnecting from ${currentHost}...`, 'c-gray'); setTimeout(() => { currentHost = 'localhost'; pLabel.textContent = 'bit_m4ster@localhost:~$'; document.getElementById('cur-host').textContent = 'localhost'; document.getElementById('cur-ip').textContent = '192.168.1.1'; document.getElementById('cur-ports').textContent = '22,80,443'; document.querySelectorAll('.node').forEach(n => n.classList.remove('active')); document.querySelector('[data-host="localhost"]').classList.add('active'); print('Disconnected. Back to localhost.', 'c-green') }, 400) },
+    ps: () => { print('PID   CPU%  MEM%  COMMAND', 'c-gray');[['1024', '0.1', '0.3', 'init'], ['1337', '2.4', '1.2', 'PIKAR-daemon'], ['2048', '0.0', '0.1', 'sshd'], ['3141', '15.2', '3.4', 'PortHack.exe'], ['4096', '0.0', '0.2', 'tracekill-monitor'], ['9999', '0.0', '0.0', '[kworker/u8:2]']].forEach(([p, c, m, n]) => { printRaw(`<span class="c-yellow">${p.padEnd(6)}</span><span class="c-green">${c.padEnd(6)}</span><span class="c-cyan">${m.padEnd(6)}</span><span class="c-white">${n}</span>`) }) },
+    ifconfig: () => { print('eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500', 'c-white'); print('      inet 192.168.1.1  netmask 255.255.255.0', 'c-green'); print('      ether 00:0c:29:3e:ab:ff  txqueuelen 1000', 'c-gray'); print('tun0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500', 'c-white'); print('      inet 10.8.0.2  netmask 255.255.255.0', 'c-green'); print('      [VPN TUNNEL ACTIVE - encrypted]', 'c-cyan') },
+  };
+  function print(t, cls = 'c-white') { const d = document.createElement('div'); d.className = 'line'; d.innerHTML = `<span class="${cls}">${t}</span>`; out.appendChild(d); out.scrollTop = out.scrollHeight }
+  function printRaw(h) { const d = document.createElement('div'); d.className = 'line'; d.innerHTML = h; out.appendChild(d); out.scrollTop = out.scrollHeight }
+  function printBanner() { printRaw('<span class="c-green">██╗  ██╗ █████╗  ██████╗██╗  ██╗███╗  ██╗███████╗████████╗</span>'); printRaw('<span class="c-green">██║  ██║██╔══██╗██╔════╝██║ ██╔╝████╗ ██║██╔════╝╚══██╔══╝</span>'); printRaw('<span class="c-green">███████║███████║██║     █████╔╝ ██╔██╗██║█████╗     ██║   </span>'); printRaw('<span class="c-green">██╔══██║██╔══██║██║     ██╔═██╗ ██║╚████║██╔══╝     ██║   </span>'); printRaw('<span class="c-green">██║  ██║██║  ██║╚██████╗██║  ██╗██║ ╚███║███████╗   ██║   </span>'); printRaw('<span class="c-green">╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚══╝╚══════╝   ╚═╝   </span>'); print(''); print('PIKAR OS v5.083 — kernel 4.19.0-PIKAR', 'c-gray'); print('Connected via TOR circuit. Trace monitoring active.', 'c-gray'); print('Type <span class="c-yellow">help</span> for available commands.', 'c-white'); print('') }
+  function printAnim(lines, cb, idx = 0) { if (idx < lines.length) { print(lines[idx], 'c-gray'); setTimeout(() => printAnim(lines, cb, idx + 1), 300 + (Math.random() * 200)) } else { setTimeout(cb, 200) } }
+  function connectNode(el) { const host = el.dataset.host; if (host === currentHost) return; printAnim([`Connecting to ${host}...`, 'Routing through proxy chain...', 'Establishing encrypted tunnel...'], () => { const h = hosts[host]; currentHost = host; pLabel.textContent = `bit_m4ster@${host}:~$`; document.getElementById('cur-host').textContent = host; document.getElementById('cur-ip').textContent = h.ip; document.getElementById('cur-ports').textContent = h.ports; document.querySelectorAll('.node').forEach(n => n.classList.remove('active')); el.classList.add('active'); print(`Connected to ${host} (${h.ip})`, 'c-green'); print(`Admin access: ${h.admin ? '<span class="c-green">YES</span>' : '<span class="c-red">NO — crack required</span>'}`) }); traceLevel = 0; document.getElementById('trace-status').textContent = 'CLEAN'; document.getElementById('trace-status').style.color = '#00ff41' }
+  function runTool(name) { printAnim([`Executing ${name}.exe...`], () => { const msgs = { PortHack: ['Scanning open ports...', 'Injecting shellcode payload...', 'Port 22 compromised ✓'], SQLBufferOverflow: ['Loading SQL buffer module...', 'Sending overflow string...', 'MySQL root shell obtained ✓'], SSHcrack: ['Generating rainbow tables...', 'SSH brute-force initiated...', 'Trying 47,842 combinations...'], TraceKill: ['Killing trace routing...', 'Injecting null packets into IDS...', 'Trace reset to 0% ✓'] }; (msgs[name] || ['Running...']).forEach((m, i) => { setTimeout(() => { print(m, i === msgs[name].length - 1 ? 'c-green' : 'c-yellow') }, i * 400) }); if (name === 'TraceKill') { setTimeout(() => { traceLevel = 0; document.getElementById('trace-status').textContent = 'CLEAN'; document.getElementById('trace-status').style.color = '#00ff41'; clearInterval(traceInterval) }, 1600) } }) }
+  function runCmd(c) { inp.value = c; handleCmd() }
+  function startTrace() { if (traceInterval) return; traceInterval = setInterval(() => { if (traceLevel < 100) { traceLevel += Math.random() * 3 + 0.5; const el = document.getElementById('trace-status'); const pct = Math.floor(traceLevel); el.textContent = `${pct}%`; el.style.color = pct > 70 ? '#ff4141' : pct > 40 ? '#ffd700' : '#00ff41'; if (pct > 70 && Math.random() < 0.05) { print(`⚠ WARNING: Trace at ${pct}% — consider running TraceKill.exe`, 'c-red') } } else { clearInterval(traceInterval); print('', ''); print('TRACE COMPLETE — CONNECTION TERMINATED BY REMOTE HOST', 'c-red'); setTimeout(() => { cmds.disconnect && cmds.disconnect() }, 1000) } }, 800) }
+  function handleCmd() { const raw = inp.value.trim(); if (!raw) return; printRaw(`<span class="c-gray">$ </span><span class="c-white">${raw}</span>`); inp.value = ''; const parts = raw.split(' '); const cmd = parts[0].toLowerCase(); const arg = parts.slice(1).join(' '); if (cmd === 'connect') { const t = arg; if (!t) { print('Usage: connect [host]', 'c-red') } else if (hosts[t]) { const el = document.querySelector(`[data-host="${t}"]`); if (el) connectNode(el); else print(`No route to host: ${t}`, 'c-red') } else { printAnim([`Probing ${t}...`, 'No route to host — check network map', ''], () => { print(`connect: ${t}: Connection refused`, 'c-red') }) } } else if (cmd === 'cat') { const f = arg; if (!f) { print('Usage: cat [filename]', 'c-red') } else if (fileContents[f]) { print(`=== ${f} ===`, 'c-cyan'); fileContents[f].split('\n').forEach(l => print(l, 'c-white')) } else { const h = hosts[currentHost]; if (h.files.includes(f)) { printAnim([`Reading ${f}...`], () => { print('[BINARY DATA or ENCRYPTED CONTENT]', 'c-yellow'); print(`Size: ${Math.floor(Math.random() * 900 + 100)}KB`, 'c-gray') }) } else { print(`cat: ${f}: No such file`, 'c-red') } } } else if (cmds[cmd]) { cmds[cmd](arg) } else { print(`${cmd}: command not found`, 'c-red') } out.scrollTop = out.scrollHeight }
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') handleCmd() });
+  const history = []; let hIdx = -1; inp.addEventListener('keydown', e => { if (e.key === 'ArrowUp') { e.preventDefault(); if (hIdx < history.length - 1) { hIdx++; inp.value = history[hIdx] } } else if (e.key === 'ArrowDown') { e.preventDefault(); if (hIdx > 0) { hIdx--; inp.value = history[hIdx] } else { hIdx = -1; inp.value = '' } } else if (e.key === 'Enter' && inp.value.trim()) { history.unshift(inp.value.trim()); hIdx = -1 } });
+  setInterval(() => { const now = new Date(); document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', { hour12: false }); document.getElementById('cpu-val').textContent = `${Math.floor(Math.random() * 15 + 5)}%` }, 1000);
+  printBanner();
+</script>
