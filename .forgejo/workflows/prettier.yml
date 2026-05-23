@@ -11,7 +11,7 @@ on:
 
 jobs:
   prettier:
-    runs-on: mayer
+    runs-on: docker
 
     steps:
       - name: Checkout
