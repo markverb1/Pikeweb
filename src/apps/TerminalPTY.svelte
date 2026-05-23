@@ -1,10 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { SveltePTY } from "../lib/SveltePTY.svelte";
-  import { startProcess } from "../lib/Programs.svelte";
+  //import { startProcess } from "../lib/Programs.svelte";
+  import { SveltePTY } from "../lib/classes/ptys/SveltePTY.svelte";
+  import { Kernel } from "../lib/classes/Kernel.svelte";
 
   let prompt = $state("Sh>");
   let pty = new SveltePTY();
+  let kernel = new Kernel();
   let pre: HTMLPreElement;
   let inputEl: HTMLInputElement;
   let wasAtBottom = false;
@@ -19,7 +21,7 @@
 
   function onkeydown(ev: KeyboardEvent) {
     if (ev.key == "Enter") {
-      pty.writeStdin(escape(inputEl.value));
+      pty.writeStdin({ text: escape(inputEl.value), isError: false, obj: {} });
       inputEl.value = "";
     }
   }
@@ -35,7 +37,11 @@
   });
 
   onMount(() => {
-    startProcess(["ctsh"], pty);
+    const proc = kernel.spawnArgs(["ctsh"], undefined, pty, false);
+    console.log(proc);
+    if (!proc) return;
+    pty.foreground(proc, true);
+    proc.runProgram(["ctsh"], proc.syscalls!);
   });
 </script>
 
