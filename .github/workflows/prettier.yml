@@ -1,28 +1,28 @@
 name: Prettier Code Formatting
 
 permissions:
-    contents: write
+  contents: write
 
 on:
-    pull_request:
-    push:
-        branches:
-            - main
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
-    prettier:
-        runs-on: ubuntu-latest
+  prettier:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
 
-            - name: Prettify code
-              uses: creyD/prettier_action@v4.6
-              with:
-                  working_directory: ${{ github.workspace }}
-                  prettier_options: --write .
-                  prettier_plugins: "prettier-plugin-svelte prettier-plugin-tailwindcss"
-                  allow_other_plugins: true
-                  commit_message: "style: Format code"
-                  git_identity: actions
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.6
+        with:
+          working_directory: ${{ github.workspace }}
+          prettier_options: --write .
+          prettier_plugins: "prettier-plugin-svelte prettier-plugin-tailwindcss"
+          allow_other_plugins: true
+          commit_message: "style: Format code"
+          git_identity: actions
