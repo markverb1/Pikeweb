@@ -125,7 +125,7 @@ export class Kernel {
       },
       setOutput(text) {
         if (pty && pty.Info.editableOutput) {
-          pty.output = text
+          pty.output = text;
         }
       },
       getOutput() {
