@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  prettier:
+  check:
     runs-on: docker
 
     steps:
