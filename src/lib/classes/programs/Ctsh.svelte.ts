@@ -11,14 +11,14 @@ export default new (class Ctsh extends Program {
 
   main(args: string[], sys: Syscalls): Promise<number> {
     const io = createStdio(sys);
+    // prettier-ignore
     io.print(
-      ` ___(  / _ // ctShell 
+` ___(  / _ // ctShell 
 ( /__)/)(-((  v1.0.3`,
     );
     return new Promise((resolve) => {
-      const prompt = $state("Sh>");
-      // prettier-ignore
-
+      let prompt = $state("Sh>");
+      sys.setPrompt(prompt);
       sys.onStdin(async (data) => {
         console.log("> " + data.text);
         io.print(
@@ -29,6 +29,8 @@ export default new (class Ctsh extends Program {
         }
         if (sys.getPTY() != null) {
           console.log("backgrounded ctsh");
+          prompt = "";
+          sys.setPrompt(prompt);
           const nuproc = sys.spawnArgs(data.text.split(" "), undefined, false);
           if (nuproc == undefined) io.print("Unknown command", true);
           else {
@@ -37,8 +39,8 @@ export default new (class Ctsh extends Program {
           }
         }
       });
-      sys.onForegrounded((pty) => {
-        pty.prompt = prompt;
+      sys.onForegrounded(() => {
+        sys.setPrompt(prompt);
       });
     });
   }

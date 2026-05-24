@@ -13,7 +13,7 @@ export default new (class Echo extends Program {
   main(args: string[], sys: Syscalls): number {
     const io = createStdio(sys);
     if (args.length < 2) {
-      io.print("echo: missing arguments", true);
+      io.print(`${this.name}: missing arguments`, true);
       return 1;
     }
     io.print(args.slice(1).join(" "));

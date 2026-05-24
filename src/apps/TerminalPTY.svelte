@@ -5,7 +5,6 @@
   import { Kernel } from "../lib/classes/Kernel.svelte";
 
   const pty = new SveltePTY();
-  const prompt = $derived(pty.prompt ?? "");
   const kernel = new Kernel();
   let pre: HTMLPreElement;
   let inputEl: HTMLInputElement;
@@ -48,11 +47,10 @@
 <div class="flex h-full w-full flex-col bg-[#474747] p-1 text-green-400">
   <pre
     bind:this={pre}
-    class="min-h-0 grow overflow-y-auto text-wrap wrap-anywhere">
-    {@html pty.output}</pre>
+    class="min-h-0 grow overflow-y-auto text-wrap wrap-anywhere">{@html pty.output}</pre>
   <label
     class="flex h-(--size) w-full shrink-0 items-center gap-2 border-t-2 border-t-black font-mono">
-    <span class="text-base-content/50 select-none">{prompt}</span>
+    <span class="text-base-content/50 select-none">{pty.prompt ?? ""}</span>
     <input
       bind:this={inputEl}
       type="text"

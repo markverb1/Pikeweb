@@ -4,7 +4,7 @@ import {
   type StreamCallback,
 } from "./Process.svelte";
 import { Programs } from "./Programs.svelte";
-import type { PTYBase } from "./base/PTY.svelte";
+import type { PTYBase, PTYInfo } from "./base/PTY.svelte";
 
 export interface Syscalls {
   stdout: (data: DataStream) => void;
@@ -26,8 +26,13 @@ export interface Syscalls {
   unpipeAll: () => void;
 
   getPTY: () => PTYBase | undefined;
+  getPTYInfo: () => PTYInfo | undefined;
   fg: (target: Process) => void;
   bg: () => void;
+  setPrompt: (text: string) => void;
+  getPrompt: () => string;
+  setOutput: (text: string) => void;
+  getOutput: () => string | undefined;
 
   spawn: () => Process;
   spawnArgs: (
@@ -108,6 +113,23 @@ export class Kernel {
       ): Process | undefined => {
         if (ptyBase == null && pty != null) ptyBase = pty;
         return this.spawnArgs(args, proc, ptyBase, startProgram);
+      },
+      setPrompt(text) {
+        if (pty) pty.prompt = text;
+      },
+      getPrompt() {
+        return pty?.prompt ?? "";
+      },
+      getPTYInfo() {
+        return pty?.Info;
+      },
+      setOutput(text) {
+        if (pty && pty.Info.editableOutput) {
+          pty.output = text
+        }
+      },
+      getOutput() {
+        return pty?.output;
       },
     };
   }

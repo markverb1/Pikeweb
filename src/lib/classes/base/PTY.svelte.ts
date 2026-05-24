@@ -10,7 +10,7 @@ export interface PTYInfo {
 
 export abstract class PTYBase {
   public abstract readonly Info: PTYInfo;
-  public prompt: string = "";
+  public prompt: string = $state("");
   protected _output: string = $state("");
 
   public get output() {
