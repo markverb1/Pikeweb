@@ -17,7 +17,7 @@
     container.style = "height:100%;width:100%;";
 
     // Mount Svelte component into it
-    //const instance = 
+    //const instance =
     mount(Terminal, {
       target: container,
       props: {},

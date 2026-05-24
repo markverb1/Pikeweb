@@ -39,7 +39,7 @@ export default new (class Ctsh extends Program {
       });
       sys.onForegrounded((pty) => {
         pty.prompt = prompt;
-      })
+      });
     });
   }
 })();
