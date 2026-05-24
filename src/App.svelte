@@ -36,7 +36,7 @@
 <!-- <div></div> -->
 <div class="">
   <Icon
-    icon="/terminal.svg"
+    icon="/icons/terminal.svg"
     name="Terminal"
     width="64"
     height="64"
