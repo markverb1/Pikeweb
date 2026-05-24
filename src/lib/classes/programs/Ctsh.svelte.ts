@@ -10,14 +10,15 @@ export default new (class Ctsh extends Program {
   };
 
   main(args: string[], sys: Syscalls): Promise<number> {
+    let prompt = $state("Sh>");
     const io = createStdio(sys);
     // prettier-ignore
     io.print(
-` ___(  / _ // ctShell 
-( /__)/)(-((  v1.0.3`,
+`     ╔═╗┬ ┬┌─┐┬  ┬   CT
+┌─┌┬┐╚═╗├─┤├┤ │  │   SHELL
+└─ ┴ ╚═╝┴ ┴└─┘┴─┘┴─┘ 1.6.0`,
     );
     return new Promise((resolve) => {
-      let prompt = $state("Sh>");
       sys.setPrompt(prompt);
       sys.onStdin(async (data) => {
         console.log("> " + data.text);
