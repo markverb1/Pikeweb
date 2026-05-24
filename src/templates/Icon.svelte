@@ -1,10 +1,14 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+
   type Props = {
     icon: string;
     name: string;
     width?: string;
     height?: string;
     ondblclick?: (e: MouseEvent) => void;
+    startingX?: number;
+    startingY?: number;
   };
 
   const {
@@ -13,12 +17,14 @@
     width = "32",
     height = "32",
     ondblclick,
+    startingX = 0,
+    startingY = 0,
   }: Props = $props();
 
   const longDragReq = 3;
-  // const initialInnerWidth = window.innerWidth;
-  // const initialInnerHeight = window.innerHeight;
 
+  let prevScreenX = $state(window.innerWidth);
+  let prevScreenY = $state(window.innerHeight);
   let x = $state(0);
   let y = $state(0);
   let offsetX = 0;
@@ -26,7 +32,10 @@
   let dragging = false;
   let longDragTimes = 0;
 
-  // const draggable = createDraggable({ id: "draggable" });
+  onMount(() => {
+    x = startingX;
+    y = startingY;
+  });
 
   function onMouseDown() {
     dragging = true;
@@ -50,6 +59,14 @@
   function onMouseUp() {
     dragging = false;
   }
+
+  function onresize() {
+    x = (x / prevScreenX) * window.innerWidth;
+    y = (y / prevScreenY) * window.innerHeight;
+    prevScreenX = window.innerWidth;
+    prevScreenY = window.innerHeight;
+    console.log(x, y);
+  }
 </script>
 
 <button
@@ -69,5 +86,5 @@
   </span>
 </button>
 
-<svelte:window onpointermove={onMouseMove} onpointerup={onMouseUp} />
+<svelte:window onpointermove={onMouseMove} onpointerup={onMouseUp} {onresize} />
 <!--[-webkit-text-stroke:0.1px_#595959] -->
