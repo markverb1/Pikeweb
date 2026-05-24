@@ -7,7 +7,7 @@ on:
   pull_request:
   push:
     branches:
-      -  #
+      - main
   workflow_dispatch:
 
 jobs:
@@ -16,12 +16,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Prettify code
         uses: creyD/prettier_action@v4.6
         with:
-          working_directory: ${{ github.workspace }}
+          working_directory: ${{ env.FORGEJO_WORKSPACE }}
           prettier_options: --write .
           prettier_plugins: "prettier-plugin-svelte prettier-plugin-tailwindcss"
           allow_other_plugins: true
