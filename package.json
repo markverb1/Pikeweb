@@ -12,7 +12,6 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@eslint/compat": "^2.0.4",
     "@eslint/js": "^10.0.1",
     "@sveltejs/vite-plugin-svelte": "^7.0.0",
     "@tailwindcss/vite": "^0.0.0-insiders.f3fdda2",
