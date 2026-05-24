@@ -1,3 +1,4 @@
+import { SvelteMap } from "svelte/reactivity";
 import { Process, type DataStream } from "../Process.svelte";
 
 export interface PTYInfo {
@@ -9,6 +10,7 @@ export interface PTYInfo {
 
 export abstract class PTYBase {
   public abstract readonly Info: PTYInfo;
+  public prompt: string = "";
   protected _output: string = $state("");
 
   public get output() {
@@ -32,7 +34,7 @@ export abstract class PTYBase {
   public abstract handleStdout(data: DataStream, proc: Process): void;
   public abstract handleExit(code: number, proc: Process): void;
 
-  private _unsubs = new Map<
+  private _unsubs = new SvelteMap<
     Process,
     {
       stdout?: () => void;

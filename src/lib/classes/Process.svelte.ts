@@ -2,6 +2,7 @@ import { WriteOnceBool } from "./WriteOnceBool.svelte";
 import type { PTYBase } from "./base/PTY.svelte";
 import type Program from "./base/Program.svelte";
 import type { Syscalls } from "./Kernel.svelte";
+import { SvelteMap } from "svelte/reactivity";
 
 export interface DataStream {
   text: string;
@@ -23,11 +24,11 @@ export class Process {
   private _stdoutCbs: StreamCallback[] = [];
   private _stdinCbs: StreamCallback[] = [];
   private _exitCbs: ((code: number) => void)[] = [];
-  private _fgCbs: ((pty: PTYBase) => {})[] = [];
-  private _bgCbs: ((pty: PTYBase) => {})[] = [];
+  private _fgCbs: ((pty: PTYBase) => void)[] = [];
+  private _bgCbs: ((pty: PTYBase) => void)[] = [];
 
   private _killed = new WriteOnceBool();
-  private _pipes = new Map<Process, () => void>();
+  private _pipes = new SvelteMap<Process, () => void>();
 
   // constructor(syscalls?: Syscalls, program?: Program) {
   //   if (syscalls) this.syscalls = syscalls;
@@ -60,14 +61,14 @@ export class Process {
     };
   }
 
-  public onForegrounded(cb: (pty: PTYBase) => {}) {
+  public onForegrounded(cb: (pty: PTYBase) => void) {
     this._fgCbs.push(cb);
     return () => {
       this._fgCbs = this._fgCbs.filter((c) => c !== cb);
     };
   }
 
-  public onBackgrounded(cb: (pty: PTYBase) => {}) {
+  public onBackgrounded(cb: (pty: PTYBase) => void) {
     this._bgCbs.push(cb);
     return () => {
       this._bgCbs = this._bgCbs.filter((c) => c !== cb);

@@ -18,11 +18,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: npm
+      - name: Install
+        run: npm ci
 
       - name: Run Svelte Check
-        run: npm ci && npm run check
+        id: check
+        run: npm run check
+        continue-on-error: true
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Fail if Svelte Check failed
+        if: steps.check.outcome == 'failure'
+        run: exit 1

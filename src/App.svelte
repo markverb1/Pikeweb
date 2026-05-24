@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { onMount, mount, setContext } from "svelte";
+  import { onMount, mount } from "svelte";
   import Terminal from "./apps/TerminalPTY.svelte";
   import Icon from "./templates/Icon.svelte";
   import WinBox from "winbox/src/js/winbox.js";
 
   onMount(() => {
     console.log("Piker Alpha");
-    let stack = WinBox.stack();
-    stack.forEach((v, i, arr) => {
+    const stack = WinBox.stack();
+    stack.forEach((v) => {
       v.close(true);
     });
   });
@@ -17,7 +17,8 @@
     container.style = "height:100%;width:100%;";
 
     // Mount Svelte component into it
-    const instance = mount(Terminal, {
+    //const instance = 
+    mount(Terminal, {
       target: container,
       props: {},
     });

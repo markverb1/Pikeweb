@@ -16,7 +16,7 @@ export default new (class Ctsh extends Program {
 ( /__)/)(-((  v1.0.3`,
     );
     return new Promise((resolve) => {
-      let prompt = $state("Sh>");
+      const prompt = $state("Sh>");
       // prettier-ignore
 
       sys.onStdin(async (data) => {
@@ -24,9 +24,12 @@ export default new (class Ctsh extends Program {
         io.print(
           `\n<span class="text-base-content/50">${prompt}${data.text}</span>\n`,
         );
+        if (data.text == "exit") {
+          resolve(0);
+        }
         if (sys.getPTY() != null) {
           console.log("backgrounded ctsh");
-          let nuproc = sys.spawnArgs(data.text.split(" "), undefined, false);
+          const nuproc = sys.spawnArgs(data.text.split(" "), undefined, false);
           if (nuproc == undefined) io.print("Unknown command", true);
           else {
             sys.fg(nuproc);
@@ -34,6 +37,9 @@ export default new (class Ctsh extends Program {
           }
         }
       });
+      sys.onForegrounded((pty) => {
+        pty.prompt = prompt;
+      })
     });
   }
 })();

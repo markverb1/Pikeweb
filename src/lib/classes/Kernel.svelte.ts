@@ -5,7 +5,6 @@ import {
 } from "./Process.svelte";
 import { Programs } from "./Programs.svelte";
 import type { PTYBase } from "./base/PTY.svelte";
-import type Program from "./base/Program.svelte";
 
 export interface Syscalls {
   stdout: (data: DataStream) => void;
@@ -13,8 +12,8 @@ export interface Syscalls {
 
   onStdout: (cb: StreamCallback) => () => void;
   onStdin: (cb: StreamCallback) => () => void;
-  onForegrounded: (cb: (pty: PTYBase) => {}) => () => void;
-  onBackgrounded: (cb: (pty: PTYBase) => {}) => () => void;
+  onForegrounded: (cb: (pty: PTYBase) => void) => () => void;
+  onBackgrounded: (cb: (pty: PTYBase) => void) => () => void;
   onExit: (cb: (code: number) => void) => () => void;
 
   receiveStdin: (data: DataStream) => void;

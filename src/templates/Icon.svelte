@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { MouseEventHandler } from "svelte/elements";
 
   type Props = {
     icon: string;
@@ -9,11 +8,11 @@
     ondblclick?: (e: MouseEvent) => void;
   };
 
-  let { icon, name, width = "32", height = "32", ondblclick }: Props = $props();
+  const { icon, name, width = "32", height = "32", ondblclick }: Props = $props();
 
   const longDragReq = 3;
-  const initialInnerWidth = window.innerWidth;
-  const initialInnerHeight = window.innerHeight;
+  // const initialInnerWidth = window.innerWidth;
+  // const initialInnerHeight = window.innerHeight;
 
   let x = $state(0);
   let y = $state(0);
@@ -24,7 +23,7 @@
 
   // const draggable = createDraggable({ id: "draggable" });
 
-  function onMouseDown(event: PointerEvent) {
+  function onMouseDown() {
     dragging = true;
     longDragTimes = 0;
   }
@@ -59,10 +58,10 @@
     {width}
     {height}
     draggable="false" />
-  <p
+  <span
     class="text-neutral-50 drop-shadow-[0_0_1.2px_rgba(0,0,0,1),0_0_1.2px_rgba(0,0,0,1)]">
     {name}
-  </p>
+  </span>
 </button>
 
 <svelte:window onpointermove={onMouseMove} onpointerup={onMouseUp} />
