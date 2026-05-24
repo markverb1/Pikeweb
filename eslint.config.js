@@ -42,7 +42,7 @@ export default defineConfig(
     rules: {
       "@typescript-eslint/no-unused-vars": "warn",
       "prefer-const": "warn",
-      "svelte/no-at-html-tags": "off" // TODO: remove this
+      "svelte/no-at-html-tags": "off", // TODO: remove this
     },
   },
 );

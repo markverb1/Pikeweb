@@ -1,5 +1,4 @@
 <script lang="ts">
-
   type Props = {
     icon: string;
     name: string;
@@ -8,7 +7,13 @@
     ondblclick?: (e: MouseEvent) => void;
   };
 
-  const { icon, name, width = "32", height = "32", ondblclick }: Props = $props();
+  const {
+    icon,
+    name,
+    width = "32",
+    height = "32",
+    ondblclick,
+  }: Props = $props();
 
   const longDragReq = 3;
   // const initialInnerWidth = window.innerWidth;
